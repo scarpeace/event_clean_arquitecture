@@ -42,4 +42,12 @@ public class EventRepositoryGateway implements EventGateway {
         List<Event> filteredEvents = entities.stream().map(eventEntityMapper::toDomain).toList();
         return filteredEvents;
     }
+
+    @Override
+    public boolean existePorIdentificador(String identificador) {
+        EventEntity foundEvent = eventRepository.findByIdentificador(identificador);
+        return foundEvent != null;
+    }
+
+
 }

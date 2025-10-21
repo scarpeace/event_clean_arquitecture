@@ -36,13 +36,23 @@ public class EventController {
 
     @PostMapping("criarevento")
     public ResponseEntity<Map<String,Object>> criarEvento(@RequestBody EventDto eventDto){
-        Event novoEvent = criarEventUseCase.execute(eventDtoMapper.toDomain(eventDto));
-        Map<String,Object> response = new HashMap<>();
-        response.put("Message: ","Evento cadastrado com sucesso no banco de dados");
-        response.put("Dados do evento: ", eventDtoMapper.toDto(novoEvent));
+        try{
+            Event novoEvent = criarEventUseCase.execute(eventDtoMapper.toDomain(eventDto));
+            Map<String,Object> response = new HashMap<>();
 
+            response.put("Mensagem: ","Evento cadastrado com sucesso no banco de dados");
+            response.put("Dados do evento: ", eventDtoMapper.toDto(novoEvent));
 
-        return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response);
+        }catch (Exception e){
+            Map<String,Object> response = new HashMap<>();
+            System.out.println(e);
+
+            response.put("Mensagem: ","Erro ao cadastrar evento no banco de dados");
+            response.put("Detalhes do Erro: ", e.getMessage());
+
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
     @GetMapping

@@ -11,4 +11,5 @@ public interface EventGateway {
     Event criarEvent(Event event);
     List<Event> buscarEvents();
     List<Event> filterEvents(TipoEvento tipoEvento);
+    boolean existePorIdentificador(String identificador);
 }

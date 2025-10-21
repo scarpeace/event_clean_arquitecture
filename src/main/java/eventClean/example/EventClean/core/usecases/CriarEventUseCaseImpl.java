@@ -2,6 +2,7 @@ package eventClean.example.EventClean.core.usecases;
 
 import eventClean.example.EventClean.core.entities.Event;
 import eventClean.example.EventClean.core.gateway.EventGateway;
+import eventClean.example.EventClean.infra.exceptions.DuplicateEventException;
 
 public class CriarEventUseCaseImpl implements CriarEventUseCase {
 
@@ -14,7 +15,11 @@ public class CriarEventUseCaseImpl implements CriarEventUseCase {
 
     @Override
     public Event execute(Event evento) {
-        Event newEvent = eventGateway.criarEvent(evento);
-        return newEvent;
+
+        if(eventGateway.existePorIdentificador(evento.identificador())){
+            throw new DuplicateEventException("O evento com o identificador "+evento.identificador()+" já existe no banco de dados");
+        }
+
+        return eventGateway.criarEvent(evento);
     }
 }

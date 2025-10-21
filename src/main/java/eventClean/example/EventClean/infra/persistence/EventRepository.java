@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface EventRepository extends JpaRepository<EventEntity,Long>{
     List<EventEntity> findByTipoEvento(TipoEvento tipoEvento);
-
+    EventEntity findByIdentificador(String identificador);
 }
