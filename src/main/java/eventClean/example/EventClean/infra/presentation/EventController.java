@@ -46,7 +46,6 @@ public class EventController {
             return ResponseEntity.ok(response);
         }catch (Exception e){
             Map<String,Object> response = new HashMap<>();
-            System.out.println(e);
 
             response.put("Mensagem: ","Erro ao cadastrar evento no banco de dados");
             response.put("Detalhes do Erro: ", e.getMessage());
