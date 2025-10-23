@@ -4,6 +4,7 @@ import eventClean.example.EventClean.core.entities.Event;
 import eventClean.example.EventClean.core.enums.TipoEvento;
 import eventClean.example.EventClean.infra.persistence.EventEntity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface EventGateway {
@@ -12,4 +13,5 @@ public interface EventGateway {
     List<Event> buscarEvents();
     List<Event> filterEvents(TipoEvento tipoEvento);
     boolean existePorIdentificador(String identificador);
+    boolean dataDeInicioInvalida(LocalDateTime dataInicio);
 }

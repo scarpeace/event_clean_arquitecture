@@ -8,6 +8,7 @@ import eventClean.example.EventClean.infra.persistence.EventEntity;
 import eventClean.example.EventClean.infra.persistence.EventRepository;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -49,5 +50,8 @@ public class EventRepositoryGateway implements EventGateway {
         return foundEvent != null;
     }
 
-
+    @Override
+    public boolean dataDeInicioInvalida(LocalDateTime dataInicio) {
+        return dataInicio.isBefore(LocalDateTime.now());
+    }
 }

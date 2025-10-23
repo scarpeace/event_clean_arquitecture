@@ -10,9 +10,7 @@ import eventClean.example.EventClean.infra.mappers.EventDtoMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1")
@@ -35,23 +33,11 @@ public class EventController {
     }
 
     @PostMapping("criarevento")
-    public ResponseEntity<Map<String,Object>> criarEvento(@RequestBody EventDto eventDto){
-        try{
-            Event novoEvent = criarEventUseCase.execute(eventDtoMapper.toDomain(eventDto));
-            Map<String,Object> response = new HashMap<>();
+    public ResponseEntity<EventDto> criarEvento(@RequestBody EventDto eventDto){
 
-            response.put("Mensagem: ","Evento cadastrado com sucesso no banco de dados");
-            response.put("Dados do evento: ", eventDtoMapper.toDto(novoEvent));
+        Event novoEvent = criarEventUseCase.execute(eventDtoMapper.toDomain(eventDto));
+        return ResponseEntity.ok(eventDtoMapper.toDto(novoEvent));
 
-            return ResponseEntity.ok(response);
-        }catch (Exception e){
-            Map<String,Object> response = new HashMap<>();
-
-            response.put("Mensagem: ","Erro ao cadastrar evento no banco de dados");
-            response.put("Detalhes do Erro: ", e.getMessage());
-
-            return ResponseEntity.badRequest().body(response);
-        }
     }
 
     @GetMapping
