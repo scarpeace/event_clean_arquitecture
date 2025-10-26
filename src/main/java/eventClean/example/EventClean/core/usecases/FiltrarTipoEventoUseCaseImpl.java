@@ -6,11 +6,11 @@ import eventClean.example.EventClean.core.gateway.EventGateway;
 
 import java.util.List;
 
-public class FiltrarEventUseCaseImpl implements FiltrarEventUseCase{
+public class FiltrarTipoEventoUseCaseImpl implements FiltrarTipoEventoUseCase {
 
     private final EventGateway eventGateway;
 
-    public FiltrarEventUseCaseImpl(EventGateway eventGateway) {
+    public FiltrarTipoEventoUseCaseImpl(EventGateway eventGateway) {
         this.eventGateway = eventGateway;
     }
 

@@ -4,7 +4,8 @@ import eventClean.example.EventClean.core.entities.Event;
 import eventClean.example.EventClean.core.enums.TipoEvento;
 import eventClean.example.EventClean.core.usecases.BuscarEventUseCase;
 import eventClean.example.EventClean.core.usecases.CriarEventUseCase;
-import eventClean.example.EventClean.core.usecases.FiltrarEventUseCase;
+import eventClean.example.EventClean.core.usecases.FiltrarIdentificadorUseCase;
+import eventClean.example.EventClean.core.usecases.FiltrarTipoEventoUseCase;
 import eventClean.example.EventClean.infra.dtos.EventDto;
 import eventClean.example.EventClean.infra.mappers.EventDtoMapper;
 import org.springframework.http.ResponseEntity;
@@ -18,18 +19,21 @@ public class EventController {
 
     private final CriarEventUseCase criarEventUseCase;
     private final BuscarEventUseCase buscarEventUseCase;
-    private final FiltrarEventUseCase filtrarEventUseCase;
+    private final FiltrarTipoEventoUseCase filtrarTipoEventoUseCase;
+    private final FiltrarIdentificadorUseCase filtrarIdentificadorUseCase;
     private final EventDtoMapper eventDtoMapper;
 
 
     public EventController(CriarEventUseCase criarEventUseCase,
                            BuscarEventUseCase buscarEventUseCase,
-                           FiltrarEventUseCase filtrarEventUseCase,
+                           FiltrarTipoEventoUseCase filtrarTipoEventoUseCase,
+                           FiltrarIdentificadorUseCase filtrarIdentificadorUseCase,
                            EventDtoMapper eventDtoMapper) {
         this.criarEventUseCase = criarEventUseCase;
+        this.filtrarIdentificadorUseCase = filtrarIdentificadorUseCase;
         this.eventDtoMapper = eventDtoMapper;
         this.buscarEventUseCase = buscarEventUseCase;
-        this.filtrarEventUseCase = filtrarEventUseCase;
+        this.filtrarTipoEventoUseCase = filtrarTipoEventoUseCase;
     }
 
     @PostMapping("criarevento")
@@ -49,8 +53,16 @@ public class EventController {
 
     @GetMapping("filtrar/{tipoEvento}")
     public List<EventDto> filtrarEventos(@PathVariable TipoEvento tipoEvento){
-        List<Event> events = filtrarEventUseCase.execute(tipoEvento);
+        List<Event> events = filtrarTipoEventoUseCase.execute(tipoEvento);
         List<EventDto> eventsDto = events.stream().map(e -> eventDtoMapper.toDto(e)).toList();
         return eventsDto;
     }
+
+    @GetMapping("filtrar/identificador/{identificador}")
+    public EventDto filtrarIdentificador(@PathVariable String identificador){
+        Event event = filtrarIdentificadorUseCase.execute(identificador);
+        return eventDtoMapper.toDto(event);
+    }
+
+
 }

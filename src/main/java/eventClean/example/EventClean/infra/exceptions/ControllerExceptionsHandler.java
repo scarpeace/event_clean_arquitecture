@@ -30,4 +30,14 @@ public class ControllerExceptionsHandler {
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(NotFoundEventException.class)
+    public ResponseEntity<Map<String,String>> notFoundEventException(NotFoundEventException exception){
+        Map<String,String> response = new HashMap<>();
+
+        response.put("Message:", "Something went wrong with the request.");
+        response.put("Error:", exception.getMessage());
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }

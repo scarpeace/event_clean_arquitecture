@@ -45,6 +45,13 @@ public class EventRepositoryGateway implements EventGateway {
     }
 
     @Override
+    public Event filtrarPorIdentificador(String identificador) {
+        EventEntity foundEvent = eventRepository.findByIdentificador(identificador);
+        return eventEntityMapper.toDomain(foundEvent);
+    }
+
+
+    @Override
     public boolean existePorIdentificador(String identificador) {
         EventEntity foundEvent = eventRepository.findByIdentificador(identificador);
         return foundEvent != null;

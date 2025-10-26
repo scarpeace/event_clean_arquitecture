@@ -1,6 +1,5 @@
 package eventClean.example.EventClean.infra.beans;
 
-import eventClean.example.EventClean.core.enums.TipoEvento;
 import eventClean.example.EventClean.core.gateway.EventGateway;
 import eventClean.example.EventClean.core.usecases.*;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +19,13 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public FiltrarEventUseCase filtrarEvent(EventGateway eventGateway){
-        return new FiltrarEventUseCaseImpl(eventGateway);
+    public FiltrarTipoEventoUseCase filtrarEvent(EventGateway eventGateway){
+        return new FiltrarTipoEventoUseCaseImpl(eventGateway);
+    }
+
+    @Bean
+    public FiltrarIdentificadorUseCase filtrarIdentificador(EventGateway eventGateway){
+        return new FiltrarIdentificadorUseCaseImpl(eventGateway);
     }
 
 }

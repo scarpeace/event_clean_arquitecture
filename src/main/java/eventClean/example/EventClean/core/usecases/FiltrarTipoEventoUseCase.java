@@ -5,7 +5,7 @@ import eventClean.example.EventClean.core.enums.TipoEvento;
 
 import java.util.List;
 
-public interface FiltrarEventUseCase {
+public interface FiltrarTipoEventoUseCase {
 
     public List<Event> execute(TipoEvento tipoEvento);
 }
