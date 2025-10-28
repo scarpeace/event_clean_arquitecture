@@ -28,4 +28,9 @@ public class BeanConfiguration {
         return new FiltrarIdentificadorUseCaseImpl(eventGateway);
     }
 
+    @Bean
+    public GerarIdentificadorUseCase gerarIdentificadorUseCase(){
+        return new GerarIndentificadorUseCaseImpl();
+    }
+
 }

@@ -1,12 +1,13 @@
 package eventClean.example.EventClean.infra.mappers;
 
 import eventClean.example.EventClean.core.entities.Event;
+import eventClean.example.EventClean.core.usecases.GerarIdentificadorUseCase;
 import eventClean.example.EventClean.infra.dtos.EventDto;
-import eventClean.example.EventClean.infra.persistence.EventEntity;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EventDtoMapper {
+
 
     public EventDto toDto(Event event){
         return new EventDto(
@@ -24,13 +25,13 @@ public class EventDtoMapper {
 
     }
 
-    public Event toDomain(EventDto eventDto){
+    public Event toDomain(EventDto eventDto, String identificadorGerado){
         return new Event(
                 eventDto.id(),
                 eventDto.nome(),
                 eventDto.descricao(),
                 eventDto.capacidade(),
-                eventDto.identificador(),
+                identificadorGerado,
                 eventDto.localEvento(),
                 eventDto.organizador(),
                 eventDto.dataInicio(),

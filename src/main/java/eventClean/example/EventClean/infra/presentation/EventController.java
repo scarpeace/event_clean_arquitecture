@@ -2,10 +2,7 @@ package eventClean.example.EventClean.infra.presentation;
 
 import eventClean.example.EventClean.core.entities.Event;
 import eventClean.example.EventClean.core.enums.TipoEvento;
-import eventClean.example.EventClean.core.usecases.BuscarEventUseCase;
-import eventClean.example.EventClean.core.usecases.CriarEventUseCase;
-import eventClean.example.EventClean.core.usecases.FiltrarIdentificadorUseCase;
-import eventClean.example.EventClean.core.usecases.FiltrarTipoEventoUseCase;
+import eventClean.example.EventClean.core.usecases.*;
 import eventClean.example.EventClean.infra.dtos.EventDto;
 import eventClean.example.EventClean.infra.mappers.EventDtoMapper;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +18,7 @@ public class EventController {
     private final BuscarEventUseCase buscarEventUseCase;
     private final FiltrarTipoEventoUseCase filtrarTipoEventoUseCase;
     private final FiltrarIdentificadorUseCase filtrarIdentificadorUseCase;
+    private final GerarIdentificadorUseCase gerarIdentificadorUseCase;
     private final EventDtoMapper eventDtoMapper;
 
 
@@ -28,18 +26,20 @@ public class EventController {
                            BuscarEventUseCase buscarEventUseCase,
                            FiltrarTipoEventoUseCase filtrarTipoEventoUseCase,
                            FiltrarIdentificadorUseCase filtrarIdentificadorUseCase,
+                           GerarIdentificadorUseCase gerarIdentificadorUseCase,
                            EventDtoMapper eventDtoMapper) {
         this.criarEventUseCase = criarEventUseCase;
         this.filtrarIdentificadorUseCase = filtrarIdentificadorUseCase;
         this.eventDtoMapper = eventDtoMapper;
         this.buscarEventUseCase = buscarEventUseCase;
         this.filtrarTipoEventoUseCase = filtrarTipoEventoUseCase;
+        this.gerarIdentificadorUseCase = gerarIdentificadorUseCase;
     }
 
     @PostMapping("criarevento")
     public ResponseEntity<EventDto> criarEvento(@RequestBody EventDto eventDto){
-
-        Event novoEvent = criarEventUseCase.execute(eventDtoMapper.toDomain(eventDto));
+        String identificador = gerarIdentificadorUseCase.execute();
+        Event novoEvent = criarEventUseCase.execute(eventDtoMapper.toDomain(eventDto,identificador));
         return ResponseEntity.ok(eventDtoMapper.toDto(novoEvent));
 
     }
